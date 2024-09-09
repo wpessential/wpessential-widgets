@@ -14,7 +14,7 @@ abstract class WidgetBase extends WP_Widget
 {
 	protected $fields = [];
 
-	public static function register ( ...$args )
+	public static function make ( ...$args )
 	{
 		new static( ...$args );
 	}
@@ -106,6 +106,11 @@ abstract class WidgetBase extends WP_Widget
 	{
 		$classes = implode( ' ', $this->set_classes() );
 		return "wpe-widget wpe-widget-{$this->set_id()} wpe-widget-{$this->set_id()} {$classes}";
+	}
+
+	protected function fields ()
+	{
+		return [];
 	}
 
 	public function view ( $args, $options )

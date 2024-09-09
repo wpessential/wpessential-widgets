@@ -17,9 +17,13 @@ final class Widget
 		return new self();
 	}
 
-	public function __construct ()
+	public function __construct () {}
+
+	public function enqueue ()
 	{
-		add_action( 'widgets_init', [ __CLASS__, 'init' ] );
+		$assets_dir_uri = get_template_directory_uri() . '/vendor/wpessential/wpessential-widgets/src/assets';
+		wp_enqueue_script( 'wpe-widget-script', $assets_dir_uri . '/js/wpe-widget-script', '', '', true );
+		wp_enqueue_style( 'wpe-widget-style', $assets_dir_uri . '/css/wpe-widget-style' );
 	}
 
 	public function add ( $class_name = '' )
@@ -48,8 +52,9 @@ final class Widget
 
 	public function init ()
 	{
-		$this->unregister();
-		$this->register();
+		add_action( 'widgets_init', [ $this, 'register' ] );
+		add_action( 'widgets_init', [ $this, 'unregister' ], 100 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue', 1000 ] );
 	}
 
 	private function unregister ()
