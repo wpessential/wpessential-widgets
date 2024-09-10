@@ -2,7 +2,7 @@
 
 Help to register the widgets in WordPress.
 
-`composer require wpessential-widgets`
+`composer require wpessential/wpessential-widgets`
 
 Add the single widget to WordPress registry
 

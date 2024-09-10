@@ -23,7 +23,7 @@ abstract class WidgetBase extends WP_Widget
 	{
 		if ( ! ( $this instanceof WidgetInit ) )
 		{
-			wp_die( __( 'WordPress widget ' . $this->get_name() . ' has not interface.', 'wpessential' ) );
+			wp_die( __( 'WordPress widget ' . $this->get_name() . ' has not interface.', 'TEXT_DOMAIN' ) );
 		}
 
 		parent::__construct(
@@ -42,7 +42,7 @@ abstract class WidgetBase extends WP_Widget
 	 */
 	private function set_title ()
 	{
-		return sprintf( esc_html__( '%s', 'wpessential' ), preg_replace( '/(?<!\ )[A-Z]/', ' $0', $this->set_id() ) );
+		return sprintf( esc_html__( '%s', 'TEXT_DOMAIN' ), preg_replace( '/(?<!\ )[A-Z]/', ' $0', $this->set_id() ) );
 	}
 
 	/**

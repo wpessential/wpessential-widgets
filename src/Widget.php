@@ -2,7 +2,7 @@
 
 namespace WPEssential\Library;
 
-if ( ! \defined( 'ABSPATH' ) && ! \defined( 'WPE_REG_WIDGETS' ) )
+if ( ! \defined( 'ABSPATH' ) && ! \defined( 'WPE_WIDGETS' ) )
 {
 	exit; // Exit if accessed directly.
 }
@@ -14,7 +14,7 @@ final class Widget
 
 	public static function make ()
 	{
-		return new self();
+		return new static();
 	}
 
 	public function __construct () {}

@@ -26,7 +26,7 @@ class Text
 
 	public function __construct ( $name = '', $id = '' )
 	{
-		$this->title = sprintf( esc_html__( '%s', 'wpessential' ), $name );
+		$this->title = sprintf( esc_html__( '%s', 'TEXT_DOMAIN' ), $name );
 		if ( ! $id )
 		{
 			$id = str_replace( ' ', '_', strtolower( $name ) );

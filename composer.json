@@ -1,7 +1,7 @@
 {
     "name": "wpessential/wpessential-widgets",
     "minimum-stability": "stable",
-    "description": "WPEssential Widgets helpin in registry of widgets in WordPress.",
+    "description": "WPEssential Widgets helping in registry of widgets in WordPress.",
     "type": "library",
     "license": "GPL-3.0-or-later",
     "autoload": {
