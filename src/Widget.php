@@ -57,7 +57,7 @@ final class Widget
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue', 1000 ] );
 	}
 
-	private function unregister ()
+	public function unregister ()
 	{
 		$widgets = apply_filters( 'wpe/library/widgets_remove', $this->remove_widgets );
 		if ( ! empty( $widgets ) )
@@ -70,7 +70,7 @@ final class Widget
 		}
 	}
 
-	private function register ()
+	public function register ()
 	{
 		$widgets = apply_filters( 'wpe/library/widgets_add', $this->add_widgets );
 		if ( ! empty( $widgets ) )
