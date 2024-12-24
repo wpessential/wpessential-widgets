@@ -23,7 +23,7 @@ abstract class WidgetBase extends WP_Widget
 	{
 		if ( ! ( $this instanceof WidgetInit ) )
 		{
-			wp_die( esc_html__( 'WordPress widget ' . $this->get_name() . ' has not interface.', 'TEXT_DOMAIN' ) );
+			wp_die( sprintf( esc_html__( 'WordPress widget %s has not interface.', 'TEXT_DOMAIN' ), $this->get_name() ) );
 		}
 
 		parent::__construct(
@@ -147,17 +147,17 @@ abstract class WidgetBase extends WP_Widget
 		return $existing_options;
 	}
 
-	private function widget ( $args, $instance )
+	public function widget ( $args, $instance )
 	{
 		$this->view( $args, $instance );
 	}
 
-	private function form ( $instance )
+	public function form ( $instance )
 	{
 		$this->options( $instance );
 	}
 
-	private function update ( $new_instance, $old_instance )
+	public function update ( $new_instance, $old_instance )
 	{
 		$this->save( $new_instance, $old_instance );
 	}
