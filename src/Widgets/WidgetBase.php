@@ -23,7 +23,7 @@ abstract class WidgetBase extends WP_Widget
 	{
 		if ( ! ( $this instanceof WidgetInit ) )
 		{
-			wp_die( __( 'WordPress widget ' . $this->get_name() . ' has not interface.', 'TEXT_DOMAIN' ) );
+			wp_die( esc_html__( 'WordPress widget ' . $this->get_name() . ' has not interface.', 'TEXT_DOMAIN' ) );
 		}
 
 		parent::__construct(
