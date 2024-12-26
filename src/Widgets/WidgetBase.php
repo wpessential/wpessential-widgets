@@ -12,25 +12,37 @@ use WPEssential\Library\Widgets\Implement\WidgetInit;
 
 abstract class WidgetBase extends WP_Widget
 {
-	protected $fields = [];
+	protected $fields        = [];
+	private   $admin_enqueue = false;
 
 	public static function make ( ...$args )
 	{
 		new static( ...$args );
 	}
 
+	public function admin_enqueue ()
+	{
+		global $pagenow;
+		if ( 'widgets.php' !== $pagenow ) return;
+
+		$assets_dir_uri = get_template_directory_uri() . '/vendor/wpessential/wpessential-widgets/src/assets';
+		wp_enqueue_script( 'wpe-widget-script', $assets_dir_uri . '/js/wpe-widget-script', [ 'jquery' ], time(), true );
+		wp_enqueue_style( 'wpe-widget-style', $assets_dir_uri . '/css/wpe-widget-style' );
+	}
+
 	public function __construct ( $desc = '' )
 	{
+		if ( true === $this->admin_enqueue )
+		{
+			add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue' ] );
+		}
+
 		if ( ! ( $this instanceof WidgetInit ) )
 		{
 			wp_die( sprintf( esc_html__( 'WordPress widget %s has not interface.', 'TEXT_DOMAIN' ), $this->get_name() ) );
 		}
 
-		parent::__construct(
-			WPE_SETTINGS . '_' . $this->set_id(),
-			$this->set_name(),
-			[ 'description' => $desc ]
-		);
+		parent::__construct( WPE_SETTINGS . '_' . $this->set_id(), $this->set_name(), [ 'description' => $desc ] );
 	}
 
 	/**
@@ -113,7 +125,7 @@ abstract class WidgetBase extends WP_Widget
 		return [];
 	}
 
-	public function view ( $args, $options )
+	public function widget ( $args, $instance )
 	{
 		if ( ! empty( $this->set_script_depends() ) )
 		{
@@ -126,16 +138,16 @@ abstract class WidgetBase extends WP_Widget
 		}
 
 		echo "<div class='{$this->set_html_wrapper_class()}' id='{$this->set_id()}'>";
-		include get_template_part( "/templates/widgets/{$this->set_id()}", '', compact( 'args', 'options' ) );
+		include get_template_part( "/templates/widgets/{$this->set_id()}", '', compact( 'args', 'instance' ) );
 		echo '</div>';
 	}
 
-	public function options ( $options )
+	public function form ( $instance )
 	{
 		include get_template_directory() . "/config/widgets/{$this->set_id()}.php";
 	}
 
-	public function save ( $new_options, $existing_options )
+	public function update ( $new_options, $existing_options )
 	{
 		if ( empty( $this->fields ) ) return;
 
@@ -145,20 +157,5 @@ abstract class WidgetBase extends WP_Widget
 		}
 
 		return $existing_options;
-	}
-
-	public function widget ( $args, $instance )
-	{
-		$this->view( $args, $instance );
-	}
-
-	public function form ( $instance )
-	{
-		$this->options( $instance );
-	}
-
-	public function update ( $new_instance, $old_instance )
-	{
-		$this->save( $new_instance, $old_instance );
 	}
 }
