@@ -1,6 +1,6 @@
 {
     "name": "wpessential/wpessential-widgets",
-    "version" : "1.0.5",
+    "version" : "1.0.6",
     "description": "WPEssential Widgets helping in registry of widgets in WordPress.",
     "type": "library",
     "license": "GPL-3.0-or-later",
